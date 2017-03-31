@@ -5,13 +5,15 @@ use IEEE.std_logic_unsigned.all;
 use std.textio.all;
 
 entity RegisterFile is
-    Port ( rs1 : in  STD_LOGIC_VECTOR (4 downto 0);
-           rs2 : in  STD_LOGIC_VECTOR (4 downto 0);
-           rd : in  STD_LOGIC_VECTOR (4 downto 0);
-           rst : in  STD_LOGIC;
-           dwr : in  STD_LOGIC_VECTOR (31 downto 0);
-           crS1 : out  STD_LOGIC_VECTOR (31 downto 0);
-           crS2 : out  STD_LOGIC_VECTOR (31 downto 0));
+	Port(
+		rs1 : in  STD_LOGIC_VECTOR (4 downto 0);
+		rs2 : in  STD_LOGIC_VECTOR (4 downto 0);
+		rd : in  STD_LOGIC_VECTOR (4 downto 0);
+		rst : in  STD_LOGIC;
+		dwr : in  STD_LOGIC_VECTOR (31 downto 0);
+		crS1 : out  STD_LOGIC_VECTOR (31 downto 0);
+		crS2 : out  STD_LOGIC_VECTOR (31 downto 0)
+	);
 end RegisterFile;
 
 architecture arq_RegisterFile of RegisterFile is
@@ -23,7 +25,7 @@ signal valueArray32 : array32 := (others => x"00000000");
 
 begin
 	process(rs1, rs2, rd, rst, dwr) begin
-		if(reset='1') then
+		if(rst='1') then
 			crS1 <= (others => '0');
 			crS2 <= (others => '0');
 		else --inicializaciones
@@ -34,6 +36,5 @@ begin
 			crS2 <= valueArray32(conv_integer(rs2));
 		end if;
 	end process;
-
 end arq_RegisterFile;
 

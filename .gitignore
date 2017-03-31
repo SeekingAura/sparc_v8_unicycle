@@ -236,3 +236,16 @@ pip-log.txt
 *.vho
 *.xmsgs
 *.ngr
+*.cmd
+Procesador/isim/pn_info
+*.c
+Procesador/isim/precompiled.exe.sim/ieee/p_1242562249.didat
+*.didat
+*.dbg
+*.dll
+*.dat
+*.exe
+*.vdb
+Procesador/isim/RegisterFile_TB_isim_beh.exe.sim/tmp_save/_1
+*.wdb
+*.ini

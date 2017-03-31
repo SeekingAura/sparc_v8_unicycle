@@ -2,10 +2,12 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity ProgramCounter is
-    Port ( clk : in  STD_LOGIC;
-           data : in  STD_LOGIC_VECTOR (0 downto 32);
-           reset : in  STD_LOGIC;
-           dataOut : out  STD_LOGIC_VECTOR (0 downto 32));
+	Port(
+		clk : in  STD_LOGIC;
+		data : in  STD_LOGIC_VECTOR (31 downto 0);
+		reset : in  STD_LOGIC;
+		dataOut : out  STD_LOGIC_VECTOR (31 downto 0)
+	);
 end ProgramCounter;
 
 architecture arq_ProgramCounter of ProgramCounter is
