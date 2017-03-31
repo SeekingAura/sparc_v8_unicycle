@@ -20,6 +20,9 @@ architecture arq_RegisterFile of RegisterFile is
 --rs1, rs2 son instrucciones
 type array32 is array (0 to 31) of std_logic_vector (31 downto 0);
  
+
+ 
+ 
 signal valueArray32 : array32 := (others => x"00000000");
 
 

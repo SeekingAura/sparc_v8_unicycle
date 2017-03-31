@@ -43,12 +43,61 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
+      --aluOp<="000000";--ADD
+		--aluOp<="000001";--SUB
+
+		--aluOp<="000010";--OR
+		--aluOp<="000011";--XOR
+		--aluOp<="000100";--XNOR
+
+		---aluOp<="000101";--SLL--Esta no es de la entrega
+		--aluOp<="000110";--SRL--Esta no es de la entrega
+		--aluOp<="000111";--SRA--Esta no es de la entrega
+
+		--aluOp<="001000";--CALL--Esta no es de la entrega
+		--aluOp<="001001";--JUMP--Esta no es de la entrega
+
+		--aluOp<="001010";--BRANCH--Esta no es de la entrega
+		--aluOp<="001011";--SETHI--Esta no es de la entrega
+
+		--aluOp<="001100";--ORN
+		--aluOp<="001101";--ANDN
       wait for 100 ns;	
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "000000";--ADD
+		wait for 20 ns;
 
-
-      -- insert stimulus here 
-
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "000001";--SUB
+		wait for 20 ns;
+		
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "000010";--OR
+		wait for 20 ns;
+		
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "000011";--XOR
+		wait for 20 ns;
+		
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "000100";--XNOR
+		wait for 20 ns;
+		
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "001100";--ORN
+		wait for 20 ns;
+		
+		crS1 <= x"00000000";
+		crS2 <= x"00000000";
+		AluOp <= "001101";--ANDN
+		wait for 20 ns;
+		
       wait;
    end process;
 

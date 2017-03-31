@@ -20,15 +20,20 @@ architecture arq_ALU of ALU is
 --aluOp<="000011";--XOR
 --aluOp<="000100";--XNOR
 
---aluOp<="000101";--SLL
---aluOp<="000110";--SRL
---aluOp<="000111";--SRA
+---aluOp<="000101";--SLL--Esta no es de la entrega
+--aluOp<="000110";--SRL--Esta no es de la entrega
+--aluOp<="000111";--SRA--Esta no es de la entrega
 
---aluOp<="001000";--CALL
---aluOp<="001001";--JUMP
+--aluOp<="001000";--CALL--Esta no es de la entrega
+--aluOp<="001001";--JUMP--Esta no es de la entrega
 
---aluOp<="001010";--BRANCH
---aluOp<="001011";--SETHI
+--aluOp<="001010";--BRANCH--Esta no es de la entrega
+--aluOp<="001011";--SETHI--Esta no es de la entrega
+
+--aluOp<="001100";--ORN
+--aluOp<="001101";--ANDN
+--aluOp<="001100";--ORN
+
 
 begin
 	process(crS1, crS2, AluOp) begin
@@ -45,14 +50,18 @@ begin
 			when "000100" =>
 				AluResult <= crS1 xnor crS2;
 			
-			when "000101" =>
+			when "000101" =>--SLL
 				AluResult <= crS1 sll crS2;
-			when "000110" =>
+			when "000110" =>--SRL
 				AluResult <= crS1 srl crS2;
-			when "000111" =>
+			when "000111" =>--SRA
 				AluResult <= crS1 sra crS2;
 			--when "001001"	 =>
 			--	AluResult <= crS1 srl crS2;
+			when "001100" =>--ORN
+				AluResult <= crS1 or not(crS2);
+			when "001101" =>--ANDN
+				AluResult <= crS1 and not(crS2);
 				
 			when others => null;
 		end case;

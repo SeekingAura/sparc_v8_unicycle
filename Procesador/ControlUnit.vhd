@@ -16,6 +16,8 @@ end ControlUnit;
 --aluOp<="000010";--OR
 --aluOp<="000011";--XOR
 --aluOp<="000100";--XNOR
+
+
 --aluOp<="000101";--SLL
 --aluOp<="000110";--SRL
 --aluOp<="000111";--SRA
@@ -25,8 +27,8 @@ end ControlUnit;
 --aluOp<="001010";--BRANCH
 --aluOp<="001011";--SETHI
 
-
-
+--aluOp<="001100";--ORN
+--aluOp<="001101";--ANDN
 
 architecture arq_ControlUnit of ControlUnit is
 signal op2 : std_logic_vector(2 downto 0) := "000";
@@ -60,6 +62,14 @@ begin
 				if(op3="000111") then--XNOR
 					aluOp<="000100";
 				end if;
+				if(op3="000110") then--ORN
+					aluOp<="001100";
+				end if;
+				if(op3="000101") then--ANDN
+					aluOp<="001101";
+				end if;
+				
+				
 				
 				if(op3="100101") then--SLL
 					aluOp<="000101";
