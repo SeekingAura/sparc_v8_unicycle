@@ -1,6 +1,5 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 use IEEE.std_logic_unsigned.all;
 use std.textio.all;
@@ -34,12 +33,16 @@ end function;
 
 signal valueArray64 : array64 := InitRomFromFile("instructions.txt");--generar el arreglo de 64 posiciones en 0 sus filas de 32
 --Falta llenar el arreay con algun fichero
+signal data : std_logic_vector (31 downto 0) := x"00000000";
 begin
 	process(adress, reset) begin
 		if(reset='1') then
-			dataOut <= (others => '0');--entregar data out en todo 0
+			data <= (others => '0');--entregar data out en todo 0
+		else
+			data<=valueArray64(conv_integer(adress));
 		end if;
-		dataOut<=valueArray64(conv_integer(adress));
 	end process;
+	dataout <= data;
+	
 end arq_InstructionMemory;
 

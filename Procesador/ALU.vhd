@@ -1,5 +1,8 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+use IEEE.std_logic_signed.all;
+use std.textio.all;
 
 
 entity ALU is
@@ -34,38 +37,38 @@ architecture arq_ALU of ALU is
 --aluOp<="001101";--ANDN
 --aluOp<="001100";--ORN
 
-
+signal AluResultOut : std_logic_vector(31 downto 0) := x"00000000";
 begin
 	process(crS1, crS2, AluOp) begin
 		case(AluOp) is
 			when "000000" =>--ADD
-				AluResult <= crS1+crS2;
+				AluResultOut <= crS1+crS2;
 			when "000001" =>--SUB
-				AluResult <= crS1-crS2;
+				AluResultOut <= crS1-crS2;
 			
 			when "000010" =>--OR
-				AluResult <= crS1 or crS2;
+				AluResultOut <= crS1 or crS2;
 			when "000011" =>--XOR
-				AluResult <= crS1 xor crS2;
+				AluResultOut <= crS1 xor crS2;
 			when "000100" =>
-				AluResult <= crS1 xnor crS2;
+				AluResultOut <= crS1 xnor crS2;
 			
-			when "000101" =>--SLL
-				AluResult <= crS1 sll crS2;
-			when "000110" =>--SRL
-				AluResult <= crS1 srl crS2;
-			when "000111" =>--SRA
-				AluResult <= crS1 sra crS2;
+			--when "000101" =>--SLL
+			--	AluResultOut <= crS1 sll crS2;
+			--when "000110" =>--SRL
+			--	AluResultOut <= crS1 srl crS2;
+			--when "000111" =>--SRA
+			--	AluResultOut <= crS1 sra crS2;
 			--when "001001"	 =>
-			--	AluResult <= crS1 srl crS2;
+			--	AluResultOut <= crS1 srl crS2;
 			when "001100" =>--ORN
-				AluResult <= crS1 or not(crS2);
+				AluResultOut <= crS1 or not(crS2);
 			when "001101" =>--ANDN
-				AluResult <= crS1 and not(crS2);
+				AluResultOut <= crS1 and not(crS2);
 				
 			when others => null;
 		end case;
 	end process;
-
+	AluResult <= AluResultOut;
 end arq_ALU;
 

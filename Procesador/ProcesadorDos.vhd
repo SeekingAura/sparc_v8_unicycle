@@ -2,15 +2,14 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 
-entity Procesador is
-	Port( 
-		clk : in  STD_LOGIC;
-		reset : in  STD_LOGIC;
-		AluResult : out  STD_LOGIC_VECTOR (31 downto 0)
-	);
-end Procesador;
+entity ProcesadorDos is
+    Port ( clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           AluResult : out  STD_LOGIC_VECTOR (31 downto 0));
+end ProcesadorDos;
 
-architecture arq_Procesador of Procesador is
+architecture arq_ProcesadorDos of ProcesadorDos is
+
 component ProgramCounter
 	Port( 
 		clk : in  STD_LOGIC;
@@ -56,6 +55,22 @@ component ControlUnit
 	);
 end component;
 
+component SEU
+	Port (
+		imm13 : in  STD_LOGIC_VECTOR (12 downto 0);
+		imm32 : out  STD_LOGIC_VECTOR (31 downto 0)
+	);
+end component;
+
+component MUXB
+	Port ( 
+		crS2 : in  STD_LOGIC_VECTOR (31 downto 0);
+		imm13 : in  STD_LOGIC_VECTOR (31 downto 0);
+		iSc : in  STD_LOGIC;
+		value : out  STD_LOGIC_VECTOR (31 downto 0)
+	);
+end component;
+
 component ALU
 	Port(
 		crS1 : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -73,7 +88,8 @@ signal ControlUnit_Out : std_logic_vector(5 downto 0) := (others => '0');
 signal ContentRegister1 : std_logic_vector(31 downto 0) := (others => '0');
 signal ContentRegister2 : std_logic_vector(31 downto 0) := (others => '0');
 signal Alu_Out : std_logic_vector(31 downto 0) := (others => '0');
-
+signal SEU_Out : std_logic_vector(31 downto 0) := (others => '0');
+signal ContentRegister2_MUXOut : std_logic_vector(31 downto 0) := (others => '0');
 begin
 	NextProgramCounter0 : ProgramCounter 
 	port map(
@@ -125,15 +141,30 @@ begin
 		crS2 => ContentRegister2
 	);
 	
+	SEU0 : SEU
+	Port map(
+		imm13 => InstructionMemory_Out(12 downto 0),
+		imm32 => SEU_Out
+	);
+	
+	MUXB0 : MUXB
+	Port map( 
+		crS2 => ContentRegister2,
+		imm13 => SEU_Out,
+		iSc => InstructionMemory_Out(13),
+		value => ContentRegister2_MUXOut
+	);
+	
 	ALU0 : ALU
 	Port map(
 		crS1 => ContentRegister1,
-		crS2 => ContentRegister2,
+		crS2 => ContentRegister2_MUXOut,
 		AluOp => ControlUnit_Out,
 		AluResult => Alu_Out
 	);
 
 AluResult <= Alu_Out;
 
-end arq_Procesador;
+
+end arq_ProcesadorDos;
 

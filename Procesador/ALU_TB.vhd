@@ -63,13 +63,18 @@ BEGIN
 		--aluOp<="001100";--ORN
 		--aluOp<="001101";--ANDN
       wait for 100 ns;	
-		crS1 <= x"00000000";
-		crS2 <= x"00000000";
+		crS1 <= x"00000003";
+		crS2 <= x"00000005";
 		AluOp <= "000000";--ADD
 		wait for 20 ns;
 
-		crS1 <= x"00000000";
-		crS2 <= x"00000000";
+		crS1 <= x"00000004";
+		crS2 <= x"00000003";
+		AluOp <= "000001";--SUB
+		wait for 20 ns;
+		
+		crS1 <= x"00000003";
+		crS2 <= x"00000007";
 		AluOp <= "000001";--SUB
 		wait for 20 ns;
 		

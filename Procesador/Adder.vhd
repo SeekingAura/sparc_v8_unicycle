@@ -12,10 +12,11 @@ entity Adder is
 end Adder;
 
 architecture arq_Adder of Adder is
-
+signal resultOut : std_logic_vector (31 downto 0) := x"00000000";
 begin
 	process(op1, op2) begin
-		result <=op1+op2;
+		resultOut <=op1+op2;
 	end process;
+	result <=resultOut;
 end arq_Adder;
 

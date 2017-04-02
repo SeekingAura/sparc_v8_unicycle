@@ -250,3 +250,4 @@ Procesador/isim/RegisterFile_TB_isim_beh.exe.sim/tmp_save/_1
 *.wdb
 *.ini
 Procesador/isim/InstructionMemory_TB_isim_beh.exe.sim/tmp_save/_1
+Procesador/isim/MUXB_TB_isim_beh.exe.sim/tmp_save/_1

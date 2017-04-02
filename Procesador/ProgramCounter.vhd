@@ -11,14 +11,15 @@ entity ProgramCounter is
 end ProgramCounter;
 
 architecture arq_ProgramCounter of ProgramCounter is
-
+signal dataSalida : std_logic_vector(31 downto 0) := (others => '0');
 begin
 	process(clk, reset) begin
 			if(reset='1') then
-				dataOut <= (others => '0');
+				dataSalida <= (others => '0');
 			elsif(rising_edge(clk))then
-				dataOut<=Data;
+				dataSalida<=Data;
 			end if;
 	end process;
+	dataOut <= dataSalida;
 end arq_ProgramCounter;
 
