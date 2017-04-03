@@ -14,9 +14,6 @@ end Adder;
 architecture arq_Adder of Adder is
 signal resultOut : std_logic_vector (31 downto 0) := x"00000000";
 begin
-	process(op1, op2) begin
-		resultOut <=op1+op2;
-	end process;
-	result <=resultOut;
+	result <=op1+op2;
 end arq_Adder;
 

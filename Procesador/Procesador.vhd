@@ -6,7 +6,8 @@ entity Procesador is
 	Port( 
 		clk : in  STD_LOGIC;
 		reset : in  STD_LOGIC;
-		AluResult : out  STD_LOGIC_VECTOR (31 downto 0)
+		AluResult : out  STD_LOGIC_VECTOR (31 downto 0);
+		ProgramCounterState : out  STD_LOGIC_VECTOR (31 downto 0)
 	);
 end Procesador;
 
@@ -134,6 +135,6 @@ begin
 	);
 
 AluResult <= Alu_Out;
-
+ProgramCounterState <=ProgramCounter_Out;
 end arq_Procesador;
 

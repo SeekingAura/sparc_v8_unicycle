@@ -1,30 +1,3 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   15:04:19 04/01/2017
--- Design Name:   
--- Module Name:   D:/Programas e instaladores/Libros y Pdf/Arquitectura de computadores/firstprocessorgroup2-SeekingAura/Procesador/Procesador_TB.vhd
--- Project Name:  Procesador
--- Target Device:  
--- Tool versions:  
--- Description:   
--- 
--- VHDL Test Bench Created by ISE for module: Procesador
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
---
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
@@ -43,7 +16,8 @@ ARCHITECTURE behavior OF Procesador_TB IS
     PORT(
          clk : IN  std_logic;
          reset : IN  std_logic;
-         AluResult : OUT  std_logic_vector(31 downto 0)
+         AluResult : OUT  std_logic_vector(31 downto 0);
+         ProgramCounterState : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
@@ -54,6 +28,7 @@ ARCHITECTURE behavior OF Procesador_TB IS
 
  	--Outputs
    signal AluResult : std_logic_vector(31 downto 0);
+   signal ProgramCounterState : std_logic_vector(31 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -64,7 +39,8 @@ BEGIN
    uut: Procesador PORT MAP (
           clk => clk,
           reset => reset,
-          AluResult => AluResult
+          AluResult => AluResult,
+          ProgramCounterState => ProgramCounterState
         );
 
    -- Clock process definitions
@@ -80,11 +56,9 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
-
-      wait for clk_period*10;
-
+      reset <= '1';
+      wait for 5 ns;	
+		reset <= '0';
       -- insert stimulus here 
 
       wait;

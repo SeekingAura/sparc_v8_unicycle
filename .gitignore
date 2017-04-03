@@ -251,3 +251,7 @@ Procesador/isim/RegisterFile_TB_isim_beh.exe.sim/tmp_save/_1
 *.ini
 Procesador/isim/InstructionMemory_TB_isim_beh.exe.sim/tmp_save/_1
 Procesador/isim/MUXB_TB_isim_beh.exe.sim/tmp_save/_1
+Procesador/isim/Adder_TB_isim_beh.exe.sim/tmp_save/_1
+Procesador/isim/ControlUnit_TB_isim_beh.exe.sim/tmp_save/_1
+Procesador/isim/Procesador_TB_isim_beh.exe.sim/tmp_save/_1
+Procesador/isim/ProgramCounter_TB_isim_beh.exe.sim/tmp_save/_1

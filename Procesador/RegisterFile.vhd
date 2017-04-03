@@ -43,6 +43,7 @@ begin
 		if(rst='1') then
 			crS1Out <= (others => '0');
 			crS1Out <= (others => '0');
+			--valueArray32 <= (others => x"00000000");
 		else --inicializaciones
 			if(rd/="00000") then--caso que no sea g0
 				valueArray32(conv_integer(rd)) <= dwr; 

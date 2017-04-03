@@ -66,7 +66,7 @@ begin
 			when "001101" =>--ANDN
 				AluResultOut <= crS1 and not(crS2);
 				
-			when others => null;
+			when others => AluResultOut<= x"00000000";
 		end case;
 	end process;
 	AluResult <= AluResultOut;

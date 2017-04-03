@@ -31,21 +31,19 @@ end ControlUnit;
 --aluOpResult<="001101";--ANDN
 
 architecture arq_ControlUnit of ControlUnit is
-signal op2 : std_logic_vector(2 downto 0) := "000";
 signal aluOpResult : std_logic_vector(5 downto 0) := "000000";
 begin
 	process(op3, op) begin
-		op2 <= op3(5 downto 3);
 		case(op) is
-			when "00" =>
-				if(op2="010") then--BRANCH
-					aluOpResult<="001010";
-				end if;
-				if(op2="100") then--SETHI
-					aluOpResult<="001011";
-				end if;
-			when "01" =>
-				aluOpResult<="001000";--CALL
+--			when "00" =>
+--				if(op2="010") then--BRANCH
+--					aluOpResult<="001010";
+--				end if;
+--				if(op2="100") then--SETHI
+--					aluOpResult<="001011";
+--				end if;
+--			when "01" =>
+--				aluOpResult<="001000";--CALL
 			when "10" =>
 				if(op3="000000") then--ADD
 					aluOpResult<="000000";
