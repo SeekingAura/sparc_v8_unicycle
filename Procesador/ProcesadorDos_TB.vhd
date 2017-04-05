@@ -15,7 +15,7 @@ ARCHITECTURE behavior OF ProcesadorDos_TB IS
     COMPONENT ProcesadorDos
     PORT(
          clk : IN  std_logic;
-         rst : IN  std_logic;
+         reset : IN  std_logic;
          AluResult : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
@@ -23,7 +23,7 @@ ARCHITECTURE behavior OF ProcesadorDos_TB IS
 
    --Inputs
    signal clk : std_logic := '0';
-   signal rst : std_logic := '0';
+   signal reset : std_logic := '0';
 
  	--Outputs
    signal AluResult : std_logic_vector(31 downto 0);
@@ -36,7 +36,7 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: ProcesadorDos PORT MAP (
           clk => clk,
-          rst => rst,
+          reset => reset,
           AluResult => AluResult
         );
 
@@ -54,8 +54,9 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
+		reset<='1';
       wait for 100 ns;	
-
+		reset<='0';
 
       -- insert stimulus here 
 

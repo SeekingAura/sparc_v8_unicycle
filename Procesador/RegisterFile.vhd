@@ -34,7 +34,7 @@ impure function InitRomFromFile (RomFileName : in string) return array32 is
 		return temp_mem;
 end function;
 --signal valueArray32 : array32 := (others => x"00000000");--caso procesador 2
-signal valueArray32 : array32 := InitRomFromFile("values.txt");--caso procesador 1
+signal valueArray32 : array32 := (others => x"00000000");--caso procesador 1
 signal crS1Out : std_logic_vector (31 downto 0) := x"00000000";
 signal crS2Out : std_logic_vector (31 downto 0) := x"00000000";
 
@@ -42,19 +42,20 @@ begin
 	process(rs1, rs2, rd, rst, dwr) begin
 		if(rst='1') then
 			crS1Out <= (others => '0');
-			crS1Out <= (others => '0');
+			crS2Out <= (others => '0');
+			valueArray32 <= (others => x"00000000");
 			--valueArray32 <= (others => x"00000000");
 		else --inicializaciones
 			if(rd/="00000") then--caso que no sea g0
 				valueArray32(conv_integer(rd)) <= dwr; 
 			end if;
 			crS1Out <= valueArray32(conv_integer(rs1));
-			crS1Out <= valueArray32(conv_integer(rs2));
+			crS2Out <= valueArray32(conv_integer(rs2));
 		end if;
 	end process;
 	
 	crS1 <= crS1Out;
-	crS2 <= crS1Out;
+	crS2 <= crS2Out;
 	
 end arq_RegisterFile;
 

@@ -21,15 +21,12 @@ architecture arq_MUXB of MUXB is
 signal output : std_logic_vector (31 downto 0):= x"00000000";
 begin
 	process(crS2, imm13, iSc) begin
-		case(iSc) is
-			when '0' =>
-				output <= crS2;
-			when '1' =>
-				output <= imm13;
-			when others =>
-				output <= x"00000000";
-		end case;
+		if(isc='0') then
+			value <= crS2;
+		elsif(isc='1') then
+			value <= imm13;
+		end if;
 	end process;
-value <= output;
+--value <= output;
 end arq_MUXB;
 

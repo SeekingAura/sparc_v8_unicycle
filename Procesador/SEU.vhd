@@ -15,7 +15,7 @@ begin
 		else
 			imm32Result <= x"00000000";
 		end if;
-		imm32Result(12 downto 0) <= imm32Result(12 downto 0) or imm13;
+		imm32Result(12 downto 0) <=imm13;
 	end process;
 imm32 <= imm32Result;
 end arq_SEU;
