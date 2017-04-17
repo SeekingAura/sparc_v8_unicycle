@@ -36,6 +36,9 @@ end ControlUnit;
 --aluOpResult<="010000";--SUBx
 --aluOpResult<="010001";--ADDx
 
+--aluOpResult<="010010";--SAVE
+--aluOpResult<="010011";--RESTORE
+
 architecture arq_ControlUnit of ControlUnit is
 signal aluOpResult : std_logic_vector(5 downto 0) := "000000";
 begin
@@ -106,6 +109,13 @@ begin
 					aluOpResult<="010000";
 				end if;
 				
+				--save/restore
+				if(op3="111100") then--SAVE
+					aluOpResult<="010010";
+				end if;
+				if(op3="111101") then--RESTORE
+					aluOpResult<="010011";
+				end if;
 			--when "11" => null
 			
 			when others => 
