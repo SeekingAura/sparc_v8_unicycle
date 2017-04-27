@@ -2,8 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity SEU is
-    Port ( imm13 : in  STD_LOGIC_VECTOR (12 downto 0);
-           imm32 : out  STD_LOGIC_VECTOR (31 downto 0));
+	Port (
+		imm13 : in  STD_LOGIC_VECTOR (12 downto 0);
+		imm32 : out  STD_LOGIC_VECTOR (31 downto 0)
+	);
 end SEU;
 
 architecture arq_SEU of SEU is

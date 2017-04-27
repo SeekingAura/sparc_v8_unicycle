@@ -1,9 +1,8 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
-use IEEE.std_logic_signed.all;
-
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.std_logic_unsigned.all;
 
 entity WindowsManager is
     Port ( rs1 : in  STD_LOGIC_VECTOR (4 downto 0);
@@ -28,38 +27,88 @@ signal nCwp_Aux : STD_LOGIC_VECTOR (4 downto 0) := "00000";
 begin
 	process(rs1, rs2, rd, op, op3, cwp) begin
 		
+		if(rs1>=24 and rs1<=31) then--valores de entrada
+			nRs1_Aux<=conv_std_logic_vector(conv_integer(rs1)-(conv_integer(cwp)*16),6);--multiplica por 16
+		end if;
+		
+		if(rs1>=16 and rs1<=23) then--valores locales
+			nRs1_Aux<=conv_std_logic_vector(conv_integer(rs1)+(conv_integer(cwp)*16),6);
+		end if;
+		
+		if(rs1>=8 and rs1<=15) then--valores de salida
+			nRs1_Aux<=conv_std_logic_vector(conv_integer(rs1)+(conv_integer(cwp)*16),6);
+		end if;
+		
+		if(rs1>=0 and rs1<=7) then--valores globales
+			nRs1_Aux<=conv_std_logic_vector(conv_integer(rs1),6);
+		end if;
+		
+		if(rs2>=24 and rs2<=31) then--valores de entrada
+			nRs2_Aux<=conv_std_logic_vector(conv_integer(rs2)-(conv_integer(cwp)*16),6);--multiplica por 16
+		end if;
+		
+		if(rs2>=16 and rs2<=23) then--valores locales
+			nRs2_Aux<=conv_std_logic_vector(conv_integer(rs2)+(conv_integer(cwp)*16),6);
+		end if;
+		
+		if(rs2>=8 and rs2<=15) then--valores de salida
+			nRs2_Aux<=conv_std_logic_vector(conv_integer(rs2)+(conv_integer(cwp)*16),6);
+		end if;
+		
+		if(rs2>=0 and rs2<=7) then--valores globales
+			nRs2_Aux<=conv_std_logic_vector(conv_integer(rs2),6);
+		end if;
+		
+		if(rd>=24 and rd<=31) then--valores de entrada
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(cwp)*16),6);--multiplica por 16
+		end if;
+		
+		if(rd>=16 and rd<=23) then--valores locales
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp)*16),6);
+		end if;
+		
+		if(rd>=8 and rd<=15) then--valores de salida
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp)*16),6);
+		end if;
+		 
+		if(rd>=0 and rd<=7) then--valores globales
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd),6);
+		end if;
+		
 		if(op="10") then
 			if(op3="111100") then--SAVE
-				nCwp<= cwp-"00001";
-			elsif(op3="111100") then--RESTORE
-				nCwp<= cwp+"00001";
+				if(cwp="00001") then
+					nCwp_Aux<= cwp-1;
+					if(rd>=24 and rd<=31) then--valores de entrada
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(cwp-1)*16),6);--multiplica por 16
+					end if;
+					
+					if(rd>=16 and rd<=23) then--valores locales
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp-1)*16),6);
+					end if;
+					
+					if(rd>=8 and rd<=15) then--valores de salida
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp-1)*16),6);
+					end if;
+				end if;
+			elsif(op3="111101") then--RESTORE
+				if(cwp="00000") then
+					nCwp_Aux<= cwp+1;
+					if(rd>=24 and rd<=31) then--valores de entrada
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(cwp+1)*16),6);--multiplica por 16
+					end if;
+					
+					if(rd>=16 and rd<=23) then--valores locales
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp+1)*16),6);
+					end if;
+					
+					if(rd>=8 and rd<=15) then--valores de salida
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp+1)*16),6);
+					end if;
+				end if;
 			end if;
 		end if;
 		
-		if(rs1>=24 and rs1<=31) then
-			nRs1_Aux<=rs1-(cwp*"10000");--multiplica por 16
-		end if;
-		
-		if(rs1>=16 and rs1<=23) then
-			nRs1_Aux<=rs1+(cwp*"10000");
-		end if;
-		
-		if(rs1>=8 and rs1<=15) then
-			nRs1_Aux<=rs1+(cwp*"10000");
-		end if;
-		
-		
-		if(rs2>=24 and rs2<=31) then
-			nRs2_Aux<=rs1-(cwp*"10000");--multiplica por 16
-		end if;
-		
-		if(rs2>=16 and rs2<=23) then
-			nRs2_Aux<=rs1+(cwp*"10000");
-		end if;
-		
-		if(rs2>=8 and rs2<=15) then
-			nRs2_Aux<=rs1+(cwp*"10000");
-		end if;
 		
 	end process;
 	

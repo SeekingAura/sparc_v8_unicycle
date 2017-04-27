@@ -81,6 +81,8 @@ end component;
 
 component ProcessorStateRegister
 	Port ( 
+		clk : in  STD_LOGIC;
+		reset : in  STD_LOGIC;
 		nzvc : in  STD_LOGIC_VECTOR (3 downto 0);
 		nCwp : in  STD_LOGIC_VECTOR (4 downto 0);
 		carry : out  STD_LOGIC;
@@ -109,18 +111,13 @@ end component;
 
 component ALU
 	Port(
+		aluOp : in  STD_LOGIC_VECTOR (5 downto 0);
 		crS1 : in  STD_LOGIC_VECTOR (31 downto 0);
 		crS2 : in  STD_LOGIC_VECTOR (31 downto 0);
-		AluOp : in  STD_LOGIC_VECTOR (5 downto 0);
-		AluResult : out  STD_LOGIC_VECTOR (31 downto 0)
+		carry : in  STD_LOGIC;
+		aluResult : out  STD_LOGIC_VECTOR (31 downto 0)
 	);
 end component;
-
-
-
-
-
-
 
 signal Adder_Out : std_logic_vector (31 downto 0) := (others => '0');
 signal NextProgramCounter_Out : std_logic_vector (31 downto 0) := (others => '0');
@@ -136,10 +133,9 @@ signal nzvc_Aux : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 signal nCwp_Aux : STD_LOGIC_VECTOR (4 downto 0) := "00000";
 signal carry_Aux : STD_LOGIC := '0';
 signal cwp_Aux : STD_LOGIC_VECTOR (4 downto 0) := "00000";
-signal nRs1_Aux : STD_LOGIC_VECTOR (5 downto 0) := "00000";
-signal nRs2_Aux : STD_LOGIC_VECTOR (5 downto 0) := "00000";
-signal nRd_Aux : STD_LOGIC_VECTOR (5 downto 0) := "00000";
-signal nCwp_Aux : STD_LOGIC_VECTOR (4 downto 0) := "00000";
+signal nRs1_Aux : STD_LOGIC_VECTOR (5 downto 0) := "000000";
+signal nRs2_Aux : STD_LOGIC_VECTOR (5 downto 0) := "000000";
+signal nRd_Aux : STD_LOGIC_VECTOR (5 downto 0) := "000000";
 
 
 begin
@@ -215,6 +211,8 @@ begin
 	
 	ProcessorStateRegister0 : ProcessorStateRegister
 	Port map(
+		clk =>clk,
+		reset => reset,
 		nzvc => nzvc_Aux,
 		nCwp => nCwp_Aux,
 		carry => carry_Aux,
@@ -242,6 +240,7 @@ begin
 	Port map(
 		crS1 => ContentRegister1,
 		crS2 => ContentRegister2_MUXOut,
+		carry => carry_Aux,
 		AluOp => ControlUnit_Out,
 		AluResult => Alu_Out
 	);
