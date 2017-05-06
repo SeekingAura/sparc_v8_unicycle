@@ -10,11 +10,11 @@ entity ControlUnit is
 		op : in  STD_LOGIC_VECTOR (1 downto 0);
 		icc : in  STD_LOGIC_VECTOR (3 downto 0);
 		cond : in  STD_LOGIC_VECTOR (3 downto 0);
-		aluOp : out  STD_LOGIC_VECTOR (5 downto 0);
 		rfRd : out  STD_LOGIC;
 		rfSource : out  STD_LOGIC_VECTOR (1 downto 0);
-		WMemory : out  STD_LOGIC_VECTOR (4 downto 0);
-		rdMemory : out  STD_LOGIC_VECTOR (5 downto 0);
+		WriteEnable  : out  STD_LOGIC;
+		pcSc : out  STD_LOGIC_VECTOR (1 downto 0);
+		WriteEnable : out std_logic;
 		aluOp : out  STD_LOGIC_VECTOR (5 downto 0)
 	);
 end ControlUnit;
@@ -23,7 +23,7 @@ end ControlUnit;
 --aluOpResult<="000010";--OR
 --aluOpResult<="000011";--XOR
 --aluOpResult<="000100";--XNOR
-
+--i can rape
 --aluOpResult<="000101";--SLL
 --aluOpResult<="000110";--SRL
 --aluOpResult<="000111";--SRA
@@ -56,38 +56,46 @@ end ControlUnit;
 
 --aluOpResult<="011100";--AND
 
---ADDcc
---ADDx
---ADDxcc
---SUBcc
---SUBx
---SUBxcc
---ANDcc
---ORcc
---ANDNcc
---ORNcc
---XORcc
---XNORcc
---sll
---srl
+--aluOpResult<="011101";--STORE
+--aluOpResult<="011110";--LOAD
 
 architecture arq_ControlUnit of ControlUnit is
+
+signal rfRd_Aux : STD_LOGIC := '0';
+signal rfSource_Aux : STD_LOGIC_VECTOR (1 downto 0) := "00";
+signal WriteMemoryEnable_Aux : STD_LOGIC := '0';
+signal pcSc_Aux : STD_LOGIC_VECTOR (1 downto 0) := "00";
+signal WriteEnable_Aux : std_logic := '0';
 signal aluOpResult : std_logic_vector(5 downto 0) := "000000";
+
 begin
-	process(op3, op) begin
+	process(op3, op, icc, cond) begin
 		case(op) is
---			when "00" =>
---				if(op2="010") then--BRANCH
---					aluOpResult<="001010";
---				end if;
---				if(op2="100") then--SETHI
---					aluOpResult<="001011";
---				end if;
---			when "01" =>
---				aluOpResult<="001000";--CALL
+			when "00" =>
+				pcSc_Aux<="00";
+				if(op3(5 downto 3)="010") then--BRANCH
+					aluOpResult<="001010";
+					WriteEnable_Aux <= '0';
+					pcSc_Aux<="01";
+				end if;
+				if(op3(5 downto 3)="100") then--SETHI
+					aluOpResult<="001011";
+					WriteEnable_Aux <= '1';
+					rfSource_Aux <= "00";
+					
+				end if;
+			when "01" =>
+				aluOpResult<="001000";--CALL
+				WriteEnable_Aux <= '1';
+				pcSc_Aux<="10";
+				rfSource_Aux <= "10";
 			when "10" =>
+				pcSc_Aux<="00";
+				rfSource_Aux <= "00";
+				WriteEnable_Aux <= '1';
 				if(op3="000000") then--ADD
 					aluOpResult<="000000";
+					
 				end if;
 				if(op3="000100") then--SUB
 					aluOpResult<="000001";
@@ -128,6 +136,8 @@ begin
 				--jump instruction
 				if(op3="111000") then--JMPL
 					aluOpResult<="001001";
+					pcSc_Aux<="11";
+					rfSource_Aux <= "10";
 				end if;
 				
 				--cc instructions
@@ -182,7 +192,14 @@ begin
 				if(op3="111101") then--RESTORE
 					aluOpResult<="011011";
 				end if;
-			--when "11" => null
+			when "11" =>
+				if(op3="000100") then --STORE
+					aluOpResult<="011101";
+				end if;
+				
+				if(op3="000000") then --LOAD
+					aluOpResult<="011110";
+				end if;
 			
 			when others => 
 			aluOpResult <= "111111";

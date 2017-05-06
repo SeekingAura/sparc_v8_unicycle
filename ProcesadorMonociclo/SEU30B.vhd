@@ -16,7 +16,7 @@ begin
 		else
 			imm32Result <= x"00000000";
 		end if;
-		imm32Result(29 downto 0) <=imm13;
+		imm32Result(29 downto 0) <=imm30;
 	end process;
 imm32 <= imm32Result;
 

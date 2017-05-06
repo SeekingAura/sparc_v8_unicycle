@@ -6,11 +6,13 @@ use std.textio.all;
 
 entity RegisterFile is
 	Port(
+		WriteEnable : in std_logic;
 		rs1 : in  STD_LOGIC_VECTOR (5 downto 0);
 		rs2 : in  STD_LOGIC_VECTOR (5 downto 0);
 		rd : in  STD_LOGIC_VECTOR (5 downto 0);
 		rst : in  STD_LOGIC;
 		dwr : in  STD_LOGIC_VECTOR (31 downto 0);
+		cRD : out std_logic_vector (31 downto 0);
 		crS1 : out  STD_LOGIC_VECTOR (31 downto 0);
 		crS2 : out  STD_LOGIC_VECTOR (31 downto 0)
 	);

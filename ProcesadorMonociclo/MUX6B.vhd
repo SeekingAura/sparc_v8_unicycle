@@ -21,7 +21,7 @@ entity MUX6B is
 end MUX6B;
 
 architecture arq_MUX6B of MUX6B is
-signal nRd_Aux : std_logic_vector(5 downto 0) := x"000000";
+signal nRd_Aux : std_logic_vector(5 downto 0) := "000000";
 
 begin
 

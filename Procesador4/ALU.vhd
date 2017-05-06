@@ -116,9 +116,9 @@ begin
 			when "010010" =>--ANDNcc
 				AluResultOut <= crS1 and not(crS2);
 			
-			when "111100" =>--SAVE
+			when "011010" =>--SAVE
 				AluResultOut <= crS1 + crS2;
-			when "111101" =>--RESTORE
+			when "011011" =>--RESTORE
 				AluResultOut <= crS1 + crS2;
 			when others => AluResultOut<= x"00000000";
 		end case;

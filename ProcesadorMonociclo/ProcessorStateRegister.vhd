@@ -17,7 +17,7 @@ architecture arq_ProcessorStateRegister of ProcessorStateRegister is
 
 signal carry_Aux : std_logic := '0';
 signal cwp_Aux : STD_LOGIC_VECTOR (4 downto 0) := "00000";
-signal icc_Aux : STD_LOGIC_VECTOR (3 downto 0) := x"0000";
+signal icc_Aux : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 begin
 	process(reset,clk,nzvc) begin
 		cwp_Aux<=nCwp;
@@ -26,14 +26,11 @@ begin
 			cwp_Aux<=nCwp;
 		else
 			if rising_edge(clk) then
-				carry_Aux<=nzvc(0);
-				cwp_Aux<=nCwp;
-				icc_Aux <= nzvc;
+				carry<=nzvc(0);
+				cwp<=nCwp;
+				icc <= nzvc;
 			end if;
 		end if;
 	end process;
-	carry<=carry_Aux;
-	cwp<=cwp_Aux;
-	icc <= icc_Aux;
 end arq_ProcessorStateRegister;
 
