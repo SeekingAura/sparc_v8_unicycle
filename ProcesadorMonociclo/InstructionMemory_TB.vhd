@@ -40,24 +40,11 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-   begin		
+   begin	
+		reset <= '1';
       -- hold reset state for 100 ns.
       wait for 100 ns;
-		adress <=x"00000000";
-		wait for 20 ns;
-		adress <=x"00000001";
-		wait for 20 ns;
-		adress <=x"00000002";
-		wait for 20 ns;
-		adress <=x"00000003";
-		wait for 20 ns;
-		adress <=x"00000004";
-		wait for 5 ns;
-		reset <= '1';
-		wait for 5 ns;
 		reset <= '0';
-		wait for 20 ns;
-		
 		adress <=x"00000000";
 		wait for 20 ns;
 		adress <=x"00000001";
@@ -67,6 +54,16 @@ BEGIN
 		adress <=x"00000003";
 		wait for 20 ns;
 		adress <=x"00000004";
+		wait for 20 ns;
+		adress <=x"00000005";
+		wait for 20 ns;
+		adress <=x"00000006";
+		wait for 20 ns;
+		adress <=x"00000007";
+		wait for 20 ns;
+		adress <=x"00000008";
+		wait for 20 ns;
+		adress <=x"00000009";
 
       wait;
    end process;

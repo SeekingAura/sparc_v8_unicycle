@@ -25,25 +25,27 @@ type array32 is array (0 to 519) of std_logic_vector (31 downto 0);
 signal valueArray32 : array32 := (others => x"00000000");--caso procesador 2
 signal crS1Out : std_logic_vector (31 downto 0) := x"00000000";
 signal crS2Out : std_logic_vector (31 downto 0) := x"00000000";
+signal cRDOut : std_logic_vector (31 downto 0) := x"00000000";
 
 begin
-	process(rs1, rs2, rd, rst, dwr) begin
+	process(rs1, rs2, rd, rst, dwr, WriteEnable) begin
 		if(rst='1') then
 			crS1Out <= (others => '0');
 			crS2Out <= (others => '0');
 			valueArray32 <= (others => x"00000000");
 			--valueArray32 <= (others => x"00000000");
 		else --inicializaciones
-			if(rd/="00000") then--caso que no sea g0
+			if(rd/="00000" and WriteEnable='1') then--caso que no sea g0 y que este WE en 1
 				valueArray32(conv_integer(rd)) <= dwr; 
 			end if;
 			crS1Out <= valueArray32(conv_integer(rs1));
 			crS2Out <= valueArray32(conv_integer(rs2));
+			cRDOut <= valueArray32(conv_integer(rd));
 		end if;
 	end process;
 	
 	crS1 <= crS1Out;
 	crS2 <= crS2Out;
-	
+	cRD <= cRDOut;
 end arq_RegisterFile;
 

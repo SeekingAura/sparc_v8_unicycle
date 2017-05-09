@@ -19,11 +19,11 @@ signal carry_Aux : std_logic := '0';
 signal cwp_Aux : STD_LOGIC_VECTOR (4 downto 0) := "00000";
 signal icc_Aux : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 begin
-	process(reset,clk,nzvc) begin
+	process(reset,clk, nzvc, nCwp) begin
 		cwp_Aux<=nCwp;
 		if reset='1' then
 			carry_Aux <= '0';
-			cwp_Aux<=nCwp;
+			cwp_Aux<="00000";
 		else
 			if rising_edge(clk) then
 				carry<=nzvc(0);

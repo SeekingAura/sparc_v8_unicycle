@@ -1,14 +1,14 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
-ENTITY MUXB_TB IS
-END MUXB_TB;
+ENTITY MUX13B_TB IS
+END MUX13B_TB;
  
-ARCHITECTURE behavior OF MUXB_TB IS 
+ARCHITECTURE behavior OF MUX13B_TB IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT MUXB
+    COMPONENT MUX13B
     PORT(
          crS2 : IN  std_logic_vector(31 downto 0);
          imm13 : IN  std_logic_vector(31 downto 0);
@@ -29,7 +29,7 @@ ARCHITECTURE behavior OF MUXB_TB IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: MUXB PORT MAP (
+   uut: MUX13B PORT MAP (
           crS2 => crS2,
           imm13 => imm13,
           iSc => iSc,

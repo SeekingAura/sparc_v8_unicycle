@@ -91,7 +91,7 @@ begin
 			nRd_Aux<=conv_std_logic_vector(conv_integer(rd),6);
 		end if;
 		
-		O7_Aux<=conv_std_logic_vector(conv_integer("01000")+(conv_integer(nCwp_Aux)*16),6);
+		O7_Aux<=conv_std_logic_vector(8+(conv_integer(nCwp_Aux)*16),6);
 		
 		
 	end process;
@@ -100,7 +100,7 @@ begin
 	nRs2 <= nRs2_Aux;
 	nRd <= nRd_Aux;
 	nCwp <= nCwp_Aux;
-	O7 <= O7_Aux;	
+	O7 <= O7_Aux;
 
 end arq_WindowsManager;
 

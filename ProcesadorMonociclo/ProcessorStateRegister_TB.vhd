@@ -1,7 +1,6 @@
-
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-  
+ 
 ENTITY ProcessorStateRegister_TB IS
 END ProcessorStateRegister_TB;
  
@@ -16,7 +15,8 @@ ARCHITECTURE behavior OF ProcessorStateRegister_TB IS
          nzvc : IN  std_logic_vector(3 downto 0);
          nCwp : IN  std_logic_vector(4 downto 0);
          carry : OUT  std_logic;
-         cwp : OUT  std_logic_vector(4 downto 0)
+         cwp : OUT  std_logic_vector(4 downto 0);
+         icc : OUT  std_logic_vector(3 downto 0)
         );
     END COMPONENT;
     
@@ -30,10 +30,10 @@ ARCHITECTURE behavior OF ProcessorStateRegister_TB IS
  	--Outputs
    signal carry : std_logic;
    signal cwp : std_logic_vector(4 downto 0);
+   signal icc : std_logic_vector(3 downto 0);
 
-	-- Clock period definitions
+   -- Clock period definitions
    constant clk_period : time := 10 ns;
-
  
 BEGIN
  
@@ -44,9 +44,11 @@ BEGIN
           nzvc => nzvc,
           nCwp => nCwp,
           carry => carry,
-          cwp => cwp
+          cwp => cwp,
+          icc => icc
         );
-	-- Clock process definitions
+
+   -- Clock process definitions
    clk_process :process
    begin
 		clk <= '0';
@@ -54,12 +56,13 @@ BEGIN
 		clk <= '1';
 		wait for clk_period/2;
    end process;
+ 
 
    -- Stimulus process
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-		reset <= '1';
+      reset <= '1';
       wait for 100 ns;
 		reset <= '0';
 		
@@ -95,9 +98,6 @@ BEGIN
 		nCwp <= "00001";
 		
 		wait for 20 ns;
-		nzvc <="0000";
-		nCwp <= "00000";
-      -- insert stimulus here 
 
       wait;
    end process;

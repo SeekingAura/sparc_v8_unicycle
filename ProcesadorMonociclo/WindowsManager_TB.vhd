@@ -1,3 +1,4 @@
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
@@ -19,7 +20,8 @@ ARCHITECTURE behavior OF WindowsManager_TB IS
          nRs1 : OUT  std_logic_vector(5 downto 0);
          nRs2 : OUT  std_logic_vector(5 downto 0);
          nRd : OUT  std_logic_vector(5 downto 0);
-         nCwp : OUT  std_logic_vector(4 downto 0)
+         nCwp : OUT  std_logic_vector(4 downto 0);
+         O7 : OUT  std_logic_vector(5 downto 0)
         );
     END COMPONENT;
     
@@ -37,6 +39,7 @@ ARCHITECTURE behavior OF WindowsManager_TB IS
    signal nRs2 : std_logic_vector(5 downto 0);
    signal nRd : std_logic_vector(5 downto 0);
    signal nCwp : std_logic_vector(4 downto 0);
+   signal O7 : std_logic_vector(5 downto 0);
  
 BEGIN
  
@@ -51,9 +54,9 @@ BEGIN
           nRs1 => nRs1,
           nRs2 => nRs2,
           nRd => nRd,
-          nCwp => nCwp
+          nCwp => nCwp,
+          O7 => O7
         );
-
 
  
 
@@ -121,8 +124,6 @@ BEGIN
 		
 		wait for 20 ns;
 		cwp <=nCwp;
-		
-
       wait;
    end process;
 

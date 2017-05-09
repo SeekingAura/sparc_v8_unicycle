@@ -52,7 +52,7 @@ begin
 		end if;
 		
 		
-		if(aluOp="001110" or aluOp="011001") then--SUBcc - SUBxcc
+		if(aluOp="001111" or aluOp="011001") then--SUBcc - SUBxcc
 			nzvc_Aux <= "0000";
 			if(aluResult(31)='1') then
 				nzvc_Aux(3) <= '1';

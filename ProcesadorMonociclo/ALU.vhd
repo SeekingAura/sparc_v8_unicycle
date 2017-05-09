@@ -120,6 +120,8 @@ begin
 				AluResultOut <= crS1 + crS2;
 			when "111101" =>--RESTORE
 				AluResultOut <= crS1 + crS2;
+			when "001001" =>--JUMPL
+				AluResultOut <= crS1 + crS2;
 			when others => AluResultOut<= x"00000000";
 		end case;
 	end process;

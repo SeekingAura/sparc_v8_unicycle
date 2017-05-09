@@ -125,7 +125,7 @@ component ProcessorStateRegister
 	);
 end component;
 
-component MUXB
+component MUX13B
 	Port ( 
 		crS2 : in  STD_LOGIC_VECTOR (31 downto 0);
 		imm13 : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -351,7 +351,7 @@ begin
 		icc => icc_Aux
 	);
 	
-	MUXB0 : MUXB
+	MUX13B0 : MUX13B
 	Port map( 
 		crS2 => ContentRegister2,
 		imm13 => SEU_Out,

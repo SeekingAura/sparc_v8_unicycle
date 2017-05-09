@@ -51,41 +51,119 @@ BEGIN
 		
 		
       wait for 100 ns;	
-		aluOp <= "001110";
+		aluOp <= "001110";--ADDcc
 		crS1 <=x"00000000";
 		crS2 <= x"00000000";
 		aluResult <= x"00000000";
       
 		wait for 20 ns;
-		aluOp <= "011000";
+		aluOp <= "011000";--ADDxcc
 		crS1 <=x"F0000000";
 		crS2 <= x"00000000";
 		aluResult <= x"00000000";
 		
 		wait for 20 ns;
-		aluOp <= "011000";
+		aluOp <= "001110";--ADDcc
 		crS1 <=x"00000000";
 		crS2 <= x"E0000000";
 		aluResult <= x"00000000";
 		
 		wait for 20 ns;
-		aluOp <= "011000";
+		aluOp <= "011000";--ADDxcc
 		crS1 <=x"00000000";
 		crS2 <= x"00000000";
 		aluResult <= x"D0000000";
 		
 		wait for 20 ns;
-		aluOp <= "011000";
+		aluOp <= "011000";--ADDxcc
 		crS1 <=x"C0000000";
 		crS2 <= x"B0000000";
 		aluResult <= x"00000000";
 		
 		wait for 20 ns;
-		aluOp <= "011000";
+		aluOp <= "011000";--ADDxcc
 		crS1 <=x"A0000000";
 		crS2 <= x"00000000";
 		aluResult <= x"F0000000";
-      wait;
+		wait for 20 ns;
+		--
+		
+		aluOp <= "001111";--SUBcc
+		crS1 <=x"00000000";
+		crS2 <= x"00000000";
+		aluResult <= x"00000000";
+      
+		wait for 20 ns;
+		aluOp <= "011001";--SUBxcc
+		crS1 <=x"F0000000";
+		crS2 <= x"00000000";
+		aluResult <= x"00000000";
+		
+		wait for 20 ns;
+		aluOp <= "001111";--SUBcc
+		crS1 <=x"00000000";
+		crS2 <= x"E0000000";
+		aluResult <= x"00000000";
+		
+		wait for 20 ns;
+		aluOp <= "011001";--SUBxcc
+		crS1 <=x"00000000";
+		crS2 <= x"00000000";
+		aluResult <= x"D0000000";
+		
+		wait for 20 ns;
+		aluOp <= "011001";--SUBxcc
+		crS1 <=x"C0000000";
+		crS2 <= x"B0000000";
+		aluResult <= x"00000000";
+		
+		wait for 20 ns;
+		aluOp <= "011001";--SUBxcc
+		crS1 <=x"A0000000";
+		crS2 <= x"00000000";
+		aluResult <= x"F0000000";
+		wait for 20 ns;
+		--logical
+		
+		aluOp <= "010000";--ANDcc
+		crS1 <=x"00000000";
+		crS2 <= x"00000000";
+		aluResult <= x"00000000";
+      
+		wait for 20 ns;
+		aluOp <= "010010";--ANDNcc
+		crS1 <=x"F0000000";
+		crS2 <= x"00000000";
+		aluResult <= x"00000000";
+		
+		wait for 20 ns;
+		aluOp <= "010001";--ORcc
+		crS1 <=x"00000000";
+		crS2 <= x"E0000000";
+		aluResult <= x"00000000";
+		
+		wait for 20 ns;
+		aluOp <= "010011";--ORNcc
+		crS1 <=x"00000000";
+		crS2 <= x"00000000";
+		aluResult <= x"D0000000";
+		
+		wait for 20 ns;
+		aluOp <= "010100";--XORcc
+		crS1 <=x"C0000000";
+		crS2 <= x"B0000000";
+		aluResult <= x"00000000";
+		
+		wait for 20 ns;
+		aluOp <= "010101";--XNORcc
+		crS1 <=x"A0000000";
+		crS2 <= x"00000000";
+		aluResult <= x"F0000000";
+		wait for 20 ns;
+		
+		wait;
+		
+		
    end process;
 
 END;

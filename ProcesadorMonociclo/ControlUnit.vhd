@@ -12,7 +12,7 @@ entity ControlUnit is
 		cond : in  STD_LOGIC_VECTOR (3 downto 0);
 		rfRd : out  STD_LOGIC;
 		rfSource : out  STD_LOGIC_VECTOR (1 downto 0);
-		WriteEnable  : out  STD_LOGIC;
+		WriteMemoryEnable  : out  STD_LOGIC;
 		pcSc : out  STD_LOGIC_VECTOR (1 downto 0);
 		WriteEnable : out std_logic;
 		aluOp : out  STD_LOGIC_VECTOR (5 downto 0)
@@ -68,15 +68,91 @@ signal pcSc_Aux : STD_LOGIC_VECTOR (1 downto 0) := "00";
 signal WriteEnable_Aux : std_logic := '0';
 signal aluOpResult : std_logic_vector(5 downto 0) := "000000";
 
+--Program counter MUX
+--pcSc_Aux<="00";--Next Pc
+--pcSc_Aux<="01";--CALL Pc
+--pcSc_Aux<="10";--Branch pc
+--pcSc_Aux<="11";--Jumpl pc
+
+--Mux dwr
+--rfSource_Aux<="00"--AluResult
+--rfSource_Aux<="01"--Pc
+--rfSource_Aux<="10"--DataMemory
+
 begin
 	process(op3, op, icc, cond) begin
 		case(op) is
 			when "00" =>
 				pcSc_Aux<="00";
+				WriteMemoryEnable_Aux <= '0';
+				rfRd_Aux<='0';
 				if(op3(5 downto 3)="010") then--BRANCH
 					aluOpResult<="001010";
 					WriteEnable_Aux <= '0';
-					pcSc_Aux<="01";
+					--rfSource_Aux<="01"--Pc
+					case(cond) is
+						when "1000" => --BA
+							pcSc_Aux<="10";
+						when "1001" => --BNE
+							if(icc(2)='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0001" => --BE
+							if(icc(2)='1') then
+								pcSc_Aux<="10";
+							end if;
+						when "1010" => --BG
+							if((icc(2) or (icc(3) xor icc(1)))='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0010" => --BLE
+							if((icc(2) or (icc(3) xor icc(1)))='1') then
+								pcSc_Aux<="10";
+							end if;
+						when "1011" => --BGE
+							if((icc(3) xor icc(1))='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0011" => --BL
+							if((icc(3) xor icc(1))='1') then
+								pcSc_Aux<="10";
+							end if;
+						when "1100" => --BGU
+							if((icc(0) xor icc(2))='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0100" => --BLEU
+							if((icc(0) xor icc(2))='1') then
+								pcSc_Aux<="10";
+							end if;
+						when "1101" => --BCC
+							if(icc(0)='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0101" => --BCS
+							if(icc(0)='1') then
+								pcSc_Aux<="10";
+							end if;
+						when "1110" => --BPOS
+							if(icc(3)='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0110" => --BNEG
+							if(icc(3)='1') then
+								pcSc_Aux<="10";
+							end if;
+						when "1111" => --BVC
+							if(icc(1)='0') then
+								pcSc_Aux<="10";
+							end if;
+						when "0111" => --BVS
+							if(icc(1)='1') then
+								pcSc_Aux<="10";
+							end if;
+						when others =>
+							pcSc_Aux<="00";
+					end case;
+					
 				end if;
 				if(op3(5 downto 3)="100") then--SETHI
 					aluOpResult<="001011";
@@ -85,14 +161,18 @@ begin
 					
 				end if;
 			when "01" =>
+				WriteMemoryEnable_Aux <= '0';
 				aluOpResult<="001000";--CALL
 				WriteEnable_Aux <= '1';
-				pcSc_Aux<="10";
-				rfSource_Aux <= "10";
+				pcSc_Aux<="01";
+				rfSource_Aux <= "01";
+				rfRd_Aux<='1';
 			when "10" =>
 				pcSc_Aux<="00";
 				rfSource_Aux <= "00";
 				WriteEnable_Aux <= '1';
+				WriteMemoryEnable_Aux <= '0';
+				rfRd_Aux<='0';
 				if(op3="000000") then--ADD
 					aluOpResult<="000000";
 					
@@ -137,7 +217,7 @@ begin
 				if(op3="111000") then--JMPL
 					aluOpResult<="001001";
 					pcSc_Aux<="11";
-					rfSource_Aux <= "10";
+					rfSource_Aux <= "01";
 				end if;
 				
 				--cc instructions
@@ -188,23 +268,37 @@ begin
 				--save/restore
 				if(op3="111100") then--SAVE
 					aluOpResult<="011010";
+					
 				end if;
 				if(op3="111101") then--RESTORE
 					aluOpResult<="011011";
 				end if;
 			when "11" =>
+				pcSc_Aux<="00";
+				rfSource_Aux <= "10";
+				rfRd_Aux<='0';
 				if(op3="000100") then --STORE
 					aluOpResult<="011101";
+					WriteEnable_Aux <= '0';
+					WriteMemoryEnable_Aux <= '1';
 				end if;
 				
 				if(op3="000000") then --LOAD
 					aluOpResult<="011110";
+					WriteEnable_Aux <= '1';
+					WriteMemoryEnable_Aux <= '0';
 				end if;
 			
 			when others => 
 			aluOpResult <= "111111";
 		end case;
 	end process;
+	
+rfRd <= rfRd_Aux;
+rfSource <= rfSource_Aux;
+WriteMemoryEnable <= WriteMemoryEnable_Aux;
+pcSc <= pcSc_Aux;
+WriteEnable <= WriteEnable_Aux;
 aluOp <= aluOpResult;
 
 end arq_ControlUnit;
