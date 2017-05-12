@@ -15,11 +15,11 @@ signal output : std_logic_vector (31 downto 0):= x"00000000";
 begin
 	process(crS2, imm13, iSc) begin
 		if(isc='0') then
-			value <= crS2;
+			output <= crS2;
 		elsif(isc='1') then
-			value <= imm13;
+			output <= imm13;
 		end if;
 	end process;
---value <= output;
+value <= output;
 end arq_MUX13B;
 

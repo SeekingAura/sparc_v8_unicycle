@@ -30,18 +30,7 @@ signal O7_Aux : STD_LOGIC_VECTOR (5 downto 0) := "000000";
 
 begin
 	process(rs1, rs2, rd, op, op3, cwp) begin
-		if(op="10") then
-			if(op3="111100") then--SAVE
-				if(cwp="00001") then
-					nCwp_Aux<= cwp-1;
-					
-				end if;
-			elsif(op3="111101") then--RESTORE
-				if(cwp="00000") then
-					nCwp_Aux<= cwp+1;
-				end if;
-			end if;
-		end if;
+		
 		
 		if(rs1>=24 and rs1<=31) then--valores de entrada
 			nRs1_Aux<=conv_std_logic_vector(conv_integer(rs1)-(conv_integer(cwp)*16),6);--multiplica por 16
@@ -76,22 +65,58 @@ begin
 		end if;
 		
 		if(rd>=24 and rd<=31) then--valores de entrada
-			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(nCwp_Aux)*16),6);--multiplica por 16
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(cwp)*16),6);--multiplica por 16
 		end if;
 		
 		if(rd>=16 and rd<=23) then--valores locales
-			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(nCwp_Aux)*16),6);
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp)*16),6);
 		end if;
 		
 		if(rd>=8 and rd<=15) then--valores de salida
-			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(nCwp_Aux)*16),6);
+			nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp)*16),6);
 		end if;
 		 
 		if(rd>=0 and rd<=7) then--valores globales
 			nRd_Aux<=conv_std_logic_vector(conv_integer(rd),6);
 		end if;
 		
-		O7_Aux<=conv_std_logic_vector(8+(conv_integer(nCwp_Aux)*16),6);
+		O7_Aux<=conv_std_logic_vector(8+(conv_integer(cwp)*16),6);
+		
+		if(op="10") then
+			if(op3="111100") then--SAVE
+				if(cwp="00001") then
+					nCwp_Aux<= cwp-1;
+					if(rd>=24 and rd<=31) then--valores de entrada
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(cwp-1)*16),6);--multiplica por 16
+					end if;
+					
+					if(rd>=16 and rd<=23) then--valores locales
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp-1)*16),6);
+					end if;
+					
+					if(rd>=8 and rd<=15) then--valores de salida
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp-1)*16),6);
+					end if;
+							end if;
+			elsif(op3="111101") then--RESTORE
+				if(cwp="00000") then
+					nCwp_Aux<= cwp+1;
+					if(rd>=24 and rd<=31) then--valores de entrada
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)-(conv_integer(cwp+1)*16),6);--multiplica por 16
+					end if;
+					
+					if(rd>=16 and rd<=23) then--valores locales
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp+1)*16),6);
+					end if;
+					
+					if(rd>=8 and rd<=15) then--valores de salida
+						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp+1)*16),6);
+					end if;
+				end if;
+			end if;
+		end if;
+		
+		
 		
 		
 	end process;

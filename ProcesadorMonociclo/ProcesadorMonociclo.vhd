@@ -171,6 +171,7 @@ component dataMemory
 		cRD : in  STD_LOGIC_VECTOR (31 downto 0);
 		aluResult : in  STD_LOGIC_VECTOR (31 downto 0);
 		WriteMemoryEnable : in  STD_LOGIC;
+		reset : in std_logic;
 		dataMem : out  STD_LOGIC_VECTOR (31 downto 0)
 	);
 end component;
@@ -392,6 +393,7 @@ begin
 		cRD => cRD_Aux,
 		aluResult => Alu_Out,
 		WriteMemoryEnable => WriteMemoryEnable_Aux,
+		reset => reset,
 		dataMem => dataMem_Aux
 	);
 
