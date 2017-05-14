@@ -51,9 +51,33 @@ BEGIN
       -- hold reset state for 100 ns.
 		cRD <= x"00000000";
 		aluResult <= x"00000000";
-		WriteMemoryEnable <= x"00000000";
+		WriteMemoryEnable <= '0';
 		reset <='1';
-      wait for 100 ns;	
+      wait for 100 ns;
+		reset <='0';
+		
+		cRD <= x"00000159";--valor 345 
+		aluResult <= x"00000064";--Adress 100
+		WriteMemoryEnable <= '1';--Store
+		
+		wait for 20 ns;
+		
+		cRD <= x"0000009B";--valor 155
+		aluResult <= x"00000000";--Adress 0
+		WriteMemoryEnable <= '1';--Store
+		
+		wait for 20 ns;
+		
+		cRD <= x"00000CBA";
+		aluResult <= x"00000064";
+		WriteMemoryEnable <= '0';--Load
+		
+		wait for 20 ns;
+		
+		cRD <= x"00000ABC";
+		aluResult <= x"00000000";
+		WriteMemoryEnable <= '0';--Load
+		
 
       -- insert stimulus here 
 

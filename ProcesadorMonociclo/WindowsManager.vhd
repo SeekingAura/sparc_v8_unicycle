@@ -80,7 +80,7 @@ begin
 			nRd_Aux<=conv_std_logic_vector(conv_integer(rd),6);
 		end if;
 		
-		O7_Aux<=conv_std_logic_vector(8+(conv_integer(cwp)*16),6);
+		O7_Aux<=conv_std_logic_vector(15+(conv_integer(cwp)*16),6);
 		
 		if(op="10") then
 			if(op3="111100") then--SAVE
@@ -97,7 +97,8 @@ begin
 					if(rd>=8 and rd<=15) then--valores de salida
 						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp-1)*16),6);
 					end if;
-							end if;
+					O7_Aux<=conv_std_logic_vector(15+(conv_integer(cwp-1)*16),6);
+				end if;
 			elsif(op3="111101") then--RESTORE
 				if(cwp="00000") then
 					nCwp_Aux<= cwp+1;
@@ -112,6 +113,7 @@ begin
 					if(rd>=8 and rd<=15) then--valores de salida
 						nRd_Aux<=conv_std_logic_vector(conv_integer(rd)+(conv_integer(cwp+1)*16),6);
 					end if;
+					O7_Aux<=conv_std_logic_vector(15+(conv_integer(cwp+1)*16),6);
 				end if;
 			end if;
 		end if;

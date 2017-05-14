@@ -1,0 +1,23 @@
+#multiplicacion: %i0, %i1 
+mov 0, %O0
+mov 0, %l0
+mov 0, %l7
+mov 0, %l6
+#for-multiplicacion
+cmp %l7, %i1
+BGE, fin for-multiplicacion
+NOP
+ADD %O0, %i0, %l0
+mov %l0, %O0
+ADD %l7, 1, %l6
+mov %l6, %l7
+BA, for-multiplicacion
+NOP
+#fin for-multiplicacion
+Jmpl %O7, 2, %G0
+NOP
+#potencia %i2, %i3
+mov 1, %O1
+#for-potencia
+ADD %l0, %l1, %l0
+

@@ -24,9 +24,8 @@ begin
 	process(cRD, aluResult, WriteMemoryEnable, reset) begin
 		if(reset='1') then
 			valueArray32 <= (others => x"00000000");
-			writeMemoryEnable <= '0';
 		end if;
-		if(WriteMemoryEnable='1') then
+		if(WriteMemoryEnable='1' and reset='0') then
 			valueArray32(conv_integer(aluResult))<=cRD;
 		end if;
 		

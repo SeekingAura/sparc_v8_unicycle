@@ -277,6 +277,8 @@ begin
 				pcSc_Aux<="00";
 				rfSource_Aux <= "10";
 				rfRd_Aux<='0';
+				WriteEnable_Aux <= '0';
+				WriteMemoryEnable_Aux <= '0';
 				if(op3="000100") then --STORE
 					aluOpResult<="011101";
 					WriteEnable_Aux <= '0';
@@ -291,6 +293,8 @@ begin
 			
 			when others => 
 			aluOpResult <= "111111";
+			WriteEnable_Aux <= '0';
+			WriteMemoryEnable_Aux <= '0';
 		end case;
 	end process;
 	
