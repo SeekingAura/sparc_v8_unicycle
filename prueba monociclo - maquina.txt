@@ -1,23 +1,67 @@
 #multiplicacion: %i0, %i1 
 mov 0, %O0
-mov 0, %l0
+mov 0, %O1
 mov 0, %l7
 mov 0, %l6
 #for-multiplicacion
 cmp %l7, %i1
 BGE, fin for-multiplicacion
-NOP
+NOT
 ADD %O0, %i0, %l0
-mov %l0, %O0
+mov %O1, %O0
 ADD %l7, 1, %l6
 mov %l6, %l7
 BA, for-multiplicacion
-NOP
+NOT
 #fin for-multiplicacion
 Jmpl %O7, 2, %G0
-NOP
-#potencia %i2, %i3
-mov 1, %O1
-#for-potencia
-ADD %l0, %l1, %l0
+NOT
 
+#potencia %i2, %i3
+mov 1, %O2
+mov 0, %O3
+mov 0, %l5
+mov 0, %l4
+#for-potencia
+cmp %l5,%i3
+BGE, fin for-potencia
+NOT
+mov %O0, %i0
+CALL multiplicacion
+NOT
+ADD %l5, 1, %l4
+mov %l4, %l5
+BA, for-potencia
+NOT
+#fin for-potencia
+Jmpl %O7, 2, %G0
+NOT
+
+#polinomio %i3, %i4
+mov 10, %O2
+mov 0, %l3
+mov 0, %l2
+mov 0, %O3
+#for-construyePolinomio
+cmp %l3, %i3
+BG, fin for-construyePolinomio
+mov %O2, %i0
+mov %l3, %i1
+CALL multiplicacion
+NOT
+st %O0, %l3, 0 --%O0 resultado de multiplicacion
+SUB %O2, 1, %O3
+mov %O3, %O2
+ADD %l3, 1, %l2
+mov %l2, %l3
+BA for-construyePolinomio
+NOT
+#fin for-construyePolinomio
+mov 0, %l3
+mov 0, %l2
+mov 0, %O3
+ld %l3, 0, %O2
+#for operaPolinomio
+cmp %l3, %i3
+BG, fin for operaPolinomio
+NOT
