@@ -25,11 +25,14 @@ begin
 		if(reset='1') then
 			valueArray32 <= (others => x"00000000");
 		end if;
-		if(WriteMemoryEnable='1' and reset='0') then
+		if(WriteMemoryEnable='1' and reset='0' and 520>aluResult) then
 			valueArray32(conv_integer(aluResult))<=cRD;
 		end if;
-		
-		dataMem_Aux<=valueArray32(conv_integer(aluResult));
+		if(520>aluResult) then
+			dataMem_Aux<=valueArray32(conv_integer(aluResult));
+		else
+			dataMem_Aux<=x"00000000";
+		end if;
 	end process;
 
 	dataMem<= dataMem_Aux;

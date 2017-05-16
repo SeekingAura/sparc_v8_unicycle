@@ -154,7 +154,7 @@ begin
 					end case;
 					
 				end if;
-				if(op3(5 downto 3)="100") then--SETHI
+				if(op3(5 downto 3)="100") then--SETHI-NOP
 					aluOpResult<="001011";
 					WriteEnable_Aux <= '1';
 					rfSource_Aux <= "00";

@@ -406,7 +406,7 @@ begin
 		dataRf => dataRf_Aux
 	);
 
-AluResult <= Alu_Out;
+AluResult <= dataRf_Aux;
 
 
 end arq_ProcesadorMonociclo;
