@@ -1,5 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
 
 entity ProgramCounter is
 	Port(
@@ -13,11 +15,13 @@ end ProgramCounter;
 architecture arq_ProgramCounter of ProgramCounter is
 signal dataSalida : std_logic_vector(31 downto 0) := (others => '0');
 begin
-	process(clk, reset) begin
+	process(clk, reset, data) begin
 			if(reset='1') then
 				dataSalida <= (others => '0');
 			elsif(rising_edge(clk))then
-				dataSalida<=Data;
+				if(data<102) then
+					dataSalida<=Data;
+				end if;
 			end if;
 	end process;
 	dataOut <= dataSalida;

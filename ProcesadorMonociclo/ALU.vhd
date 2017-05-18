@@ -60,7 +60,7 @@ begin
 		case(AluOp) is
 			when "000000" =>--ADD
 				AluResultOut <= crS1+crS2;
-			when "001111" =>--ADDcc
+			when "001110" =>--ADDcc
 				AluResultOut <= crS1+crS2;
 			when "010110" =>--ADDx
 				AluResultOut <= crS1+crS2+carry;
@@ -69,7 +69,7 @@ begin
 			
 			when "000001" =>--SUB
 				AluResultOut <= crS1-crS2;
-			when "001110" =>--SUBcc
+			when "001111" =>--SUBcc
 				AluResultOut <= crS1-crS2;
 			when "010111" =>--SUBx
 				AluResultOut <= crS1-crS2-carry;
@@ -122,7 +122,16 @@ begin
 				AluResultOut <= crS1 + crS2;
 			when "001001" =>--JUMPL
 				AluResultOut <= crS1 + crS2;
+			
+			when "011101" => --Store
+				AluResultOut <= crS1 + crS2;
+			when "011110" =>
+				AluResultOut <= crS1 + crS2;
+			
+			
 			when others => AluResultOut<= x"00000000";
+			
+			
 		end case;
 	end process;
 	AluResult <= AluResultOut;

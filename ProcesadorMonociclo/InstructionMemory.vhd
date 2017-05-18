@@ -15,7 +15,7 @@ end InstructionMemory;
 architecture arq_InstructionMemory of InstructionMemory is
 --arreglo de 64
 
-type array64 is array (0 to 63) of std_logic_vector (31 downto 0);
+type array64 is array (0 to 101) of std_logic_vector (31 downto 0);
 
 impure function InitRomFromFile (RomFileName : in string) return array64 is
 		FILE RomFile : text open read_mode is RomFileName;

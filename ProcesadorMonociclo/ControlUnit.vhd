@@ -85,6 +85,7 @@ begin
 			when "00" =>
 				pcSc_Aux<="00";
 				WriteMemoryEnable_Aux <= '0';
+				WriteEnable_Aux <= '0';
 				rfRd_Aux<='0';
 				if(op3(5 downto 3)="010") then--BRANCH
 					aluOpResult<="001010";
@@ -156,7 +157,7 @@ begin
 				end if;
 				if(op3(5 downto 3)="100") then--SETHI-NOP
 					aluOpResult<="001011";
-					WriteEnable_Aux <= '1';
+					WriteEnable_Aux <= '0';
 					rfSource_Aux <= "00";
 					
 				end if;

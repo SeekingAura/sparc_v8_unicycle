@@ -18,21 +18,21 @@ signal newPc_Aux : STD_LOGIC_VECTOR (31 downto 0) := x"00000000";
 begin
 	process(callPc, branch, nextPc, jumpL, pcSc) begin
 		case(pcSc) is
-			when "00" =>
-				newPc_Aux <= callPc;
 			when "01" =>
-				newPc_Aux <= branch;
+				newPc <= callPc;
 			when "10" =>
-				newPc_Aux <= nextPc;
+				newPc <= branch;
+			when "00" =>
+				newPc <= nextPc;
 			when "11" =>
-				newPc_Aux <= jumpL;
+				newPc <= jumpL;
 			when others =>
-				newPc_Aux <= nextPc;
+				newPc <= nextPc;
 		end case;
 	
 	
 	end process;
 
-	newPc <= newPc_Aux;
+	--newPc <= newPc_Aux;
 end arq_MUXPC;
 

@@ -27,9 +27,9 @@ begin
 
 	process(rd, O7, rfDest) begin
 		if(rfDest='1') then
-			nRd_Aux <= rd;
-		else
 			nRd_Aux <= O7;
+		else
+			nRd_Aux <= rd;
 		end if;
 	end process;
 	
