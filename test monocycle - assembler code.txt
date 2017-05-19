@@ -2,6 +2,13 @@ BA, Main
 NOP
 mov 0, %O0 -- #multiplicacion: %i0, %i1
 mov 0, %l6
+cmp %i1, 0
+BGE, while-multiplicacion
+NOP
+SUB %l6, %i0, %l7
+mov %l7, %i0
+SUB %l6, %i1, %l7
+mov %l7, %i1
 cmp %l6, %i1 -- #while-multiplicacion
 BGE, fin while-multiplicacion
 NOP
@@ -29,7 +36,7 @@ BA, while-potencia
 NOP
 Jmpl %O6, 1, %G0 -- #fin while-potencia
 NOP
-mov 10, %O2 -- #polinomio %i3, %i4
+mov 2, %O2 -- #polinomio %i3, %i4
 mov 0, %l4
 mov %O7, %O5
 ADD %l4, 0, %G0
@@ -37,6 +44,8 @@ st %O2, %l4, 0
 NOP
 ADD %l4, 1, %l7
 mov %l7, %l4
+SUB %O2, 3, %O3
+mov %O3, %O2
 cmp %l4, %i3 -- #while-construyePolinomio
 BG, fin while-construyePolinomio
 NOP
@@ -48,7 +57,7 @@ NOP
 ADD %l4, 0, %G0
 st %O0, %l4, 0 -- %O0 resultado de multiplicacion
 NOP
-SUB %O2, 1, %O3
+SUB %O2, 3, %O3
 mov %O3, %O2
 ADD %l4, 1, %l7
 mov %l7, %l4
@@ -59,6 +68,8 @@ mov 0, %l7
 ADD %l4, 0, %G0
 ld %l4, 0, %O2
 NOP
+ADD %l4, 1, %l7
+mov %l7, %l4
 cmp %l4, %i3 -- #while operaPolinomio
 BG, fin while operaPolinomio
 NOP
@@ -82,19 +93,31 @@ NOP
 NOP
 jmpl %O5, 1, %G0 -- #fin while operaPolinomio
 NOP
-mov 4, %l0 -- #main
-mov 6, %l1
+mov -4, %l0 -- #main
+mov 7, %l1
 mov %l0, %i0
 mov %l1, %i1
 NOP
 CALL multiplicacion
 NOP
-mov %l0, %i1
+mov 0, %l6
+cmp %l1, 0
+BGE, Fin negativo exponente polinomio
+NOP
+SUB %l6, %l1, %l7
+mov %l7, %l1
+mov %l0, %i1#Fin negativo exponente potencia
 mov %l1, %i2
 NOP
 CALL potencia
 NOP
-mov %l0, %i3
+mov 0, %l6
+cmp %l0, 0
+BGE, Fin negativo n polinomio
+NOP
+SUB %l6, %l0, %l7
+mov %l7, %l0
+mov %l0, %i3#Fin negativo n polinomio
 mov %l1, %i4
 NOP
 CALL polinomio

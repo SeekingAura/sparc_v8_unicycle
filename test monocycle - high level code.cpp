@@ -5,6 +5,12 @@ int multiplicacion(int x, int y){//%i0, %i1
 	int temp2;//%O1
 	int i=0;//%l6
 	int iaux;//%l7
+	if(y<0){//si y es negativo, para garantizar resultado negativo
+		iaux=0-x;
+		x=iaux;
+		iaux=0-y;
+		y=iaux;
+	}
 	while(i<y){
 		temp2=temp+x;
 		temp=temp2;//sumar 'y' veces 'x'//mov %l0, %O0
@@ -30,18 +36,20 @@ int potencia(int base, int exponente){//%i1, %i2
 
 int polinomio(int n, int x){//%i3, %i4
 	int k[n+1];
-	int temp=10;//valor que multiplicará cada valor del polinomio//%O2
+	int temp=2;//valor que multiplicará cada valor del polinomio//%O2
 	int temp2;//%O3
 	int i=0;//%l4
 	int iaux;//%l7
 	k[0]=temp;
 	iaux=i+1;
 	i=iaux;
+	temp2=temp-3;
+	temp=temp2;
 	while(i<=n){//construye polinomio
 		//cout<<"ingrese valor para vector k["<<i<<"]"<<endl;
 		//cin>>temp;
 		k[i]=multiplicacion(temp,i);
-		temp2=temp-1;//para asi permitir que sea 1+2x+3x^2
+		temp2=temp-3;//para asi permitir que sea 1+2x+3x^2
 		temp=temp2;
 		iaux=i+1;
 		i=iaux;
@@ -58,7 +66,8 @@ int polinomio(int n, int x){//%i3, %i4
 	iaux=0;//%l7
 	temp2;//Sera resultado del call de mas adelante//%O0, 
 	temp=k[i];//%O2
-	
+	iaux=i+1;
+	i=iaux;
 	while(i<=n){//opera polinomio
 		temp2=multiplicacion(k[i], potencia(x, i));
 		iaux=temp+temp2;
@@ -70,14 +79,21 @@ int polinomio(int n, int x){//%i3, %i4
 }
 
 int main(){
-	int x=3, y=5;//%l0, %l1
-	cout<<"Efectuando x*y"<<endl;
+	int x=-4, y=7, iaux;//%l0, %l1
+	cout<<"Efectuando "<<x<<"*"<<y<<endl;
 	cout<<"Resultado "<<x<<"*"<<y<<"="<<multiplicacion(x,y)<<endl;
+	if(y<0){//garantiza exponente positivo
+		iaux=0-y;
+		y=iaux;
+	}
+	cout<<"Efectuando "<<x<<"^"<<y<<endl;
+	cout<<"Resultado "<<x<<"^"<<y<<"="<<potencia(x,y)<<endl;
+	if(x<0){//garantiza n positivo
+		iaux=0-x;
+		x=iaux;
+	}
 	
-	cout<<"Efectuando x^y"<<endl;
-	cout<<"Resultado "<<x<<"*"<<y<<"="<<potencia(x,y)<<endl;
-
-	cout<<"Efectuando polinomio de grado n, valor x"<<endl;
+	cout<<"Efectuando polinomio de grado n="<<x<<", valor x="<<y<<endl;
 	cout<<"Resultado "<<polinomio(x, y)<<endl;
 	return 1;
 }

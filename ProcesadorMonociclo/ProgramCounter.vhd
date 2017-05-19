@@ -19,7 +19,7 @@ begin
 			if(reset='1') then
 				dataSalida <= (others => '0');
 			elsif(rising_edge(clk))then
-				if(data<102) then
+				if(data<125) then
 					dataSalida<=Data;
 				end if;
 			end if;
