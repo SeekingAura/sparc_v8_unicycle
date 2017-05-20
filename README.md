@@ -1,8 +1,8 @@
-# Procesador Arquitectura Grupo 2
-Estudiante: Carlos Arturo Moreno Tabares
-Codigo: 1088029924
+# Subject Architecture - make processor Group 2
+Student: Carlos Arturo Moreno Tabares
+Code: 1088029924
 
-# Primer Procesador SPARC V8 Monociclo
+# First Processor SPARC V8 Monociclo
 
 ![Esquema del Procesador](/images/Procesador.png)
 
@@ -21,3 +21,6 @@ Construcción del primer procesador en la materia Arquitectura de Computadores, 
   * [Register File](/RegisterFile.vhd)
   * [Control Unit](/Procesador/ControlUnit.vhd)
   * [Arithmetic Logic Unit (ALU)](/Procesador/ALU.vhd)
+  
+  
+$~$
