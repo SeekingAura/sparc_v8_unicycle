@@ -1,4 +1,6 @@
 # Subject Architecture - make processor Group 2
+This repo is based from https://github.com/architectureClass/firstprocessorgroup2-SeekingAura
+
 Student: Carlos Arturo Moreno Tabares
 Code: 1088029924
 
